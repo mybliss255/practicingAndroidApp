@@ -1,0 +1,2 @@
+# practicingAndroidApp
+アンドロイドアプリの習作
