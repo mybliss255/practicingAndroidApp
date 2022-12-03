@@ -10,4 +10,8 @@
     <string name="invalid_password">パスワードは5文字以上でなくてはいけません</string>
     <string name="login_failed">"ログイン失敗"</string>
     <string name="prompt_username">ユーザー名</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_collection">コレクション</string>
+    <string name="title_friends">友達</string>
+    <string name="title_events">イベント</string>
 </resources>
