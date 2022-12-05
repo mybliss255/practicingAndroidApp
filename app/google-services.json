@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "139642659797",
+    "project_id": "my-board-game-project",
+    "storage_bucket": "my-board-game-project.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:139642659797:android:3a14279bdae810ad4a535c",
+        "android_client_info": {
+          "package_name": "com.example.myboardgameapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "139642659797-9bgknvuu62m6li6ed92r51dmdokd96lb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.myboardgameapplication",
+            "certificate_hash": "da72eae5d127e99ba46b9658d2363239cf10146d"
+          }
+        },
+        {
+          "client_id": "139642659797-nembkrvprre2hjd379t8d08g7un653k1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAsxrAGiuUCQrXcL3XFF2o83zFMDNkS1Dw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "139642659797-nembkrvprre2hjd379t8d08g7un653k1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

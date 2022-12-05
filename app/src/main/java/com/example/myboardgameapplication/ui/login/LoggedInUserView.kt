@@ -5,5 +5,5 @@ package com.example.myboardgameapplication.ui.login
  */
 data class LoggedInUserView(
         val displayName: String
-        //... other data fields that may be accessible to the UI
+        //UIで使用可能なほかのデータを追加可能
 )
