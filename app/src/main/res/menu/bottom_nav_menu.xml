@@ -7,13 +7,13 @@
         android:title="@string/title_collection" />
 
     <item
-        android:id="@+id/navigation_dashboard"
-        android:icon="@drawable/ic_group_48dp"
-        android:title="@string/title_friends" />
-
-    <item
-        android:id="@+id/navigation_notifications"
+        android:id="@+id/navigation_event"
         android:icon="@drawable/ic_public_48dp"
         android:title="@string/title_events" />
+
+    <item
+        android:id="@+id/navigation_friend"
+        android:icon="@drawable/ic_group_48dp"
+        android:title="@string/title_friends" />
 
 </menu>

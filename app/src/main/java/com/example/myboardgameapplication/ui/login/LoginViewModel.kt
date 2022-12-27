@@ -76,6 +76,7 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
                             LoginResult(success = LoggedInUserView(displayName = authedUser.email.toString()))
                         loginRepository.setLoggedInUser(loggedin)
                     } else {
+
                         Log.d(tag, "signup exception")
                         Log.d(tag, task.exception?.message.toString())
                         when (task.exception) {

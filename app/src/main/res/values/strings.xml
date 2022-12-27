@@ -22,4 +22,5 @@
     <string name="signup_weakPassword">パスワードが弱いです</string>
     <string name="signup_malformedAddress">メールアドレスの形式が不正です</string>
     <string name="signup_addressInUse">既に使用されているメールアドレスです</string>
+    <string name="logout">ログアウト</string>
 </resources>

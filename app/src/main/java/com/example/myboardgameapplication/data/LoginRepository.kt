@@ -21,7 +21,7 @@ class LoginRepository(val dataSource: LoginDataSource) {
         get() = user != null
 
     init {
-        // If user credentials will be cached in local storage, it is recommended it be encrypted
+        // ユーザーのクレジット関係のデータをローカルで保持するならば暗号化されるのが望ましい
         // @see https://developer.android.com/training/articles/keystore
         user = null
     }

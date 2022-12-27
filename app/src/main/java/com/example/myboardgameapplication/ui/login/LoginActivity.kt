@@ -1,9 +1,11 @@
 package com.example.myboardgameapplication.ui.login
 
 import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
@@ -12,6 +14,7 @@ import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.example.myboardgameapplication.MainActivity
 import com.example.myboardgameapplication.R
 import com.example.myboardgameapplication.databinding.ActivityLoginBinding
 import com.google.firebase.auth.FirebaseAuth
@@ -24,16 +27,19 @@ class LoginActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
 
+    private  val tag = "LOGINACTIVITY"
+
     override fun onStart() {
         super.onStart()
 
-        //自動ログイン
-        val mAuth = FirebaseAuth.getInstance()
-        val currentUser = mAuth.currentUser
+        Log.d(tag,"onStart")
+        //現在ログインしているユーザー
+        val currentUser = FirebaseAuth.getInstance().currentUser
 
-        if(currentUser != null && currentUser.displayName != null){
-                val loggedIn = LoggedInUserView(currentUser.displayName!!)
-                updateUiWithUser(loggedIn)
+        if (currentUser != null) {
+            Log.d(tag,"already logged in")
+            val loggedIn = LoggedInUserView(currentUser.email!!)
+            updateUiWithUser(loggedIn)
         }
     }
 
@@ -125,12 +131,15 @@ class LoginActivity : AppCompatActivity() {
     private fun updateUiWithUser(model: LoggedInUserView) {
         val welcome = getString(R.string.welcome)
         val displayName = model.displayName
-        // TODO : initiate successful logged in experience
+        // TODO : ログイン後の処理
         Toast.makeText(
                 applicationContext,
                 "$welcome $displayName",
                 Toast.LENGTH_LONG
         ).show()
+
+        val intent = Intent(application, MainActivity::class.java)
+        startActivity(intent)
     }
 
     private fun showLoginFailed(@StringRes errorString: Int) {
