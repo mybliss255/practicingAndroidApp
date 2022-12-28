@@ -1,89 +1,96 @@
 package com.example.myboardgameapplication
 
 import android.os.Bundle
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
-import com.example.myboardgameapplication.databinding.ActivityMainBinding
+import com.example.myboardgameapplication.ui.BottomNavItem
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainBinding
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
-        val navView: BottomNavigationView = binding.navView
-        val navController = findNavController(R.id.nav_host_fragment_activity_main)
-
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        val appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.navigation_collection, R.id.navigation_friend, R.id.navigation_event
-            )
-        )
-        setupActionBarWithNavController(navController, appBarConfiguration)
-        navView.setupWithNavController(navController)
+        setContent {
+            MainScreenView()
+        }
     }
 
+    @Composable
+    fun NavigationGraph(navController: NavHostController) {
+        NavHost(navController, startDestination = BottomNavItem.Collection.screen_route) {
+            composable(BottomNavItem.Collection.screen_route) {
+                CollectionScreen()
+            }
+            composable(BottomNavItem.Event.screen_route) {
+                EventScreen()
+            }
+            composable(BottomNavItem.Friend.screen_route) {
+                FriendScreen()
+            }
+
+        }
+    }
+    val items = listOf(
+        BottomNavItem.Collection,
+        BottomNavItem.Event,
+        BottomNavItem.Friend
+    )
 
     @Composable
-    fun MyAppNavHost(
-        modifier: Modifier = Modifier,
-        navController: NavHostController = rememberNavController(),
-        startDestination: String = "profile"
-    ) {
-        NavHost(
-            modifier = modifier,
-            navController = navController,
-            startDestination = startDestination
-        ) {
-            composable("profile") {
-                ProfileScreen(
-                    onNavigateToFriends = { navController.navigate("friendsList") },
-                )
+    fun BottomNavigation(navController: NavController) {
+        Column(modifier = Modifier
+            .fillMaxWidth().heightIn(min = 32.dp)
+        ){
+            BottomNavigation {
+                val navBackStackEntry by navController.currentBackStackEntryAsState()
+                val currentRoute = navBackStackEntry?.destination?.route
+                items.forEach { item ->
+                    BottomNavigationItem(
+                        icon = { Icon(Icons.Filled.Favorite, contentDescription = item.title) },
+                        label = { Text(text = item.title,
+                            fontSize = 9.sp) },
+                        alwaysShowLabel = true,
+                        selected = currentRoute == item.screen_route,
+                        onClick = {
+                            navController.navigate(item.screen_route) {
+                                navController.graph.startDestinationRoute?.let { screen_route ->
+                                    popUpTo(screen_route) {
+                                        saveState = true
+                                    }
+                                }
+                                launchSingleTop = true
+                                restoreState = true
+                            }
+                        }
+                    )
+                }
             }
         }
     }
 
     @Composable
-    fun ProfileScreen(
-        onNavigateToFriends: () -> Unit,
-    ) {
-        Button(onClick = onNavigateToFriends) {
-            Text(text = "友達")
-        }
-    }
+    fun MainScreenView(){
+        val navController = rememberNavController()
+        Scaffold(
+            Modifier,
+            bottomBar = { BottomNavigation(navController = navController) }
 
-    @Composable
-    fun CollectionScreen(
-        onNavigateToFriends: () -> Unit,
-    ) {
-        Button(onClick = onNavigateToFriends) {
-            Text(text = "コレクション")
-        }
-    }
-
-    @Composable
-    fun EventScreen(
-        onNavigateToFriends: () -> Unit,
-    ) {
-        Button(onClick = onNavigateToFriends) {
-            Text(text = "イベント")
-        }
+        )  { contentPadding ->
+            Box(modifier = Modifier.padding(contentPadding))
+            NavigationGraph(navController = navController) }
     }
 }
